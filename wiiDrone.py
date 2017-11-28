@@ -17,7 +17,7 @@ print '********Controls*********\n'
 print 'D-Pad Controls Movement\n'
 print 'Hold A to control movement with motion\n'
 print 'Press PLUS and MINUS together to disconnect and quit.\n'
-print '*************************
+print '*************************'
 
 time.sleep(3)
 

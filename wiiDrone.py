@@ -54,7 +54,7 @@ while True:
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_A):
-	wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
+    wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
     check = 0
     while check == 0:
       accel = wii.state['acc']

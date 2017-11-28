@@ -13,10 +13,10 @@ except RuntimeError:
   quit()
 
 print 'Wiimote connection established!\n'
-print '********Controls*********\n'
-print 'D-Pad Controls Movement\n'
-print 'Hold A to control movement with motion\n'
-print 'Press PLUS and MINUS together to disconnect and quit.\n'
+print '********Controls*********'
+print 'D-Pad Controls Movement'
+print 'Hold A to control movement with motion'
+print 'Press PLUS and MINUS together to disconnect and quit.'
 print '*************************'
 
 time.sleep(3)
@@ -58,15 +58,15 @@ while True:
     check = 0
     while check == 0:
       accel = wii.state['acc']
-	  print(accel)
-	  if accel[1] < 125:
-		print 'Increase Duty Cycle'
-	  else if accel[1] > 135:
-		print 'Decrease Duty Cycle'
-	  if accel[0] < 125:
-		print 'Decrease Left Moters Duty Cycle'
-	  else if accel[0] > 135:
-		print 'Decrease Right Motors Duty Cycle'
+      print(accel)
+      if accel[1] < 125:
+        print 'Increase Duty Cycle'
+      elif accel[1] > 135:
+	print 'Decrease Duty Cycle'
+      if accel[0] < 125:
+        print 'Decrease Left Motors Duty Cycle'
+      elif accel[0] > 135:
+	print 'Decrease Right Motors Duty Cycle'
       time.sleep(0.1)
       check = (buttons & cwiid.BTN_A)
     time.sleep(button_delay)

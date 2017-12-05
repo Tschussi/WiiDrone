@@ -64,13 +64,13 @@ while True:
     if (leftStopTime > STOP_LOWER_LIMIT + 10):
       bus.write_word_data(addr, 0x38, leftStopTime-10)
       bus.write_word_data(addr, 0x3C, leftStopTime-10)
-    if (rightStopTime > STOP_LOWER_LIMIT + 10):
+    if (rightStopTime < STOP_UPPER_LIMIT - 10):
       bus.write_word_data(addr, 0x40, rightStopTime+10)
       bus.write_word_data(addr, 0x44, rightStopTime+10)
     time.sleep(button_delay)
 
   if(buttons & cwiid.BTN_RIGHT):
-    if (leftStopTime > STOP_LOWER_LIMIT + 10):
+    if (leftStopTime < STOP_UPPER_LIMIT - 10):
       bus.write_word_data(addr, 0x38, leftStopTime+10)
       bus.write_word_data(addr, 0x3C, leftStopTime+10)
     if (rightStopTime > STOP_LOWER_LIMIT + 10):
@@ -79,7 +79,7 @@ while True:
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_UP):
-    if (leftStopTime < STOP_UPPER_LIMIT - 10 & rightStopTime < STOP_UPPER_LIMIT - 10):
+    if (leftStopTime < STOP_UPPER_LIMIT - 10 and rightStopTime < STOP_UPPER_LIMIT - 10):
       leftStopTime = leftStopTime + 10
       rightStopTime = rightStopTime + 10
     bus.write_word_data(addr, 0x38, leftStopTime)
@@ -89,7 +89,7 @@ while True:
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_DOWN):
-    if (leftStopTime > STOP_LOWER_LIMIT + 10 & rightStopTime > STOP_LOWER_LIMIT + 10):
+    if (leftStopTime > STOP_LOWER_LIMIT + 10 and rightStopTime > STOP_LOWER_LIMIT + 10):
       leftStopTime = leftStopTime - 10
       rightStopTime = rightStopTime - 10
     bus.write_word_data(addr, 0x38, leftStopTime)

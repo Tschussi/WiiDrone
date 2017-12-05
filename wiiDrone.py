@@ -1,17 +1,24 @@
 import cwiid, time, smbus
 
+# Constants
+START_TIME = 0
+STOP_LOWER_LIMIT = 819
+STOP_UPPER_LIMIT = 1638
+
 # I2C & Servo Hat set up 
 bus = smbus.SMBus(1)
-addr = 0x40
+addr = 0x40 # sudo i2cdetect -y 1
 bus.write_byte_data(addr, 0, 0x20)
 bus.write_byte_data(addr, 0xfe, 0x1e)
 # PWM start times
-#bus.write_word_data(addr, 0x36, 819) # Ch12
-#bus.write_word_data(addr, 0x3A, 819) # Ch13
-#bus.write_word_data(addr, 0x3E, 819) # Ch14
-#bus.write_word_data(addr, 0x42, 819) # Ch15
+bus.write_word_data(addr, 0x36, START_TIME) # Ch12
+bus.write_word_data(addr, 0x3A, START_TIME) # Ch13
+bus.write_word_data(addr, 0x3E, START_TIME) # Ch14
+bus.write_word_data(addr, 0x42, START_TIME) # Ch15
 # WiiMote set up
+stopTime = STOP_LOWER_LIMIT
 button_delay = 0.1
+check = 0
 
 print 'Please press buttons 1 + 2 on your Wiimote now ...'
 time.sleep(1)
@@ -49,19 +56,46 @@ while True:
 
   # The following code controls the signals of pwms for flying a drone based on wiimote inputs
   if (buttons & cwiid.BTN_LEFT):
-    print 'Move Left'
+    if (stopTime > STOP_LOWER_LIMIT + 20)
+      bus.write_word_data(addr, 0x38, stopTime-20)
+      bus.write_word_data(addr, 0x3C, stopTime-20)
+    check = 0		
+    while check = 0
+      time.sleep(button_delay)
+      check = (buttons & cwiid.BTN_LEFT)
+    bus.write_word_data(addr, 0x38, stopTime)
+    bus.write_word_data(addr, 0x3C, stopTime)	
     time.sleep(button_delay)
 
   if(buttons & cwiid.BTN_RIGHT):
-    print 'Move Right'
+    if (stopTime > STOP_LOWER_LIMIT + 20)
+      bus.write_word_data(addr, 0x40, stopTime-20)
+      bus.write_word_data(addr, 0x44, stopTime-20)
+    check = 0		
+    while check = 0
+      time.sleep(button_delay)
+      check = (buttons & cwiid.BTN_LEFT)
+    bus.write_word_data(addr, 0x40, stopTime)
+    bus.write_word_data(addr, 0x44, stopTime)	
     time.sleep(button_delay)
 
+
   if (buttons & cwiid.BTN_UP):
-    print 'Move Up'
+    if (stopTime < STOP_UPPER_LIMIT - 10)
+      stopTime = stopTime + 10
+    bus.write_word_data(addr, 0x38, stopTime)
+    bus.write_word_data(addr, 0x3C, stopTime)
+    bus.write_word_data(addr, 0x40, stopTime)
+    bus.write_word_data(addr, 0x44, stopTime)
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_DOWN):
-    print 'Move Down'
+    if (stopTime > STOP_LOWER_LIMIT + 10)
+      stopTime = stopTime - 10
+    bus.write_word_data(addr, 0x38, stopTime)
+    bus.write_word_data(addr, 0x3C, stopTime)
+    bus.write_word_data(addr, 0x40, stopTime)
+    bus.write_word_data(addr, 0x44, stopTime)
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_A):
@@ -78,10 +112,14 @@ while True:
         print 'Decrease Left Motors Duty Cycle'
       elif accel[0] > 135:
 	print 'Decrease Right Motors Duty Cycle'
-      time.sleep(0.1)
+      time.sleep(button_delay)
       check = (buttons & cwiid.BTN_A)
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):
-    print 'Button B pressed'
+    stopTime = 819		
+    bus.write_word_data(addr, 0x38, stopTime)
+    bus.write_word_data(addr, 0x3C, stopTime)
+    bus.write_word_data(addr, 0x40, stopTime)
+    bus.write_word_data(addr, 0x44, stopTime)
     time.sleep(button_delay)

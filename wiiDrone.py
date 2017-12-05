@@ -107,8 +107,8 @@ while True:
   if (buttons & cwiid.BTN_A):
     print 'Button A pressed'
     wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
-    check = 1
-    while check == 1:
+    check = 0
+    while check == 0:
       accel = wii.state['acc']
       print(accel)
       if accel[1] < 125:

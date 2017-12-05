@@ -5,8 +5,9 @@ START_TIME = 0
 STOP_LOWER_LIMIT = 819
 STOP_UPPER_LIMIT = 1638
 # Variables
-stopTime = STOP_LOWER_LIMIT
-button_delay = 0.1
+rightStopTime = STOP_LOWER_LIMIT
+leftStopTime = STOP_LOWER_LIMIT
+button_delay = 0.2
 check = 0
 # I2C & Servo Hat set up 
 bus = smbus.SMBus(1)
@@ -60,69 +61,55 @@ while True:
 
   # The following code controls the signals of pwms for flying a drone based on wiimote inputs
   if (buttons & cwiid.BTN_LEFT):
-    if (stopTime > STOP_LOWER_LIMIT + 20):
-      bus.write_word_data(addr, 0x38, stopTime-20)
-      bus.write_word_data(addr, 0x3C, stopTime-20)
-    check = 1		
-    while check == 1:
-      buttons = wii.state['buttons']
-      time.sleep(button_delay)
-      check = (buttons & cwiid.BTN_LEFT)
-    bus.write_word_data(addr, 0x38, stopTime)
-    bus.write_word_data(addr, 0x3C, stopTime)	
+    if (leftStopTime > STOP_LOWER_LIMIT + 10):
+      bus.write_word_data(addr, 0x38, leftStopTime-10)
+      bus.write_word_data(addr, 0x3C, leftStopTime-10)
+    if (rightStopTime > STOP_LOWER_LIMIT + 10):
+      bus.write_word_data(addr, 0x40, rightStopTime+10)
+      bus.write_word_data(addr, 0x44, rightStopTime+10)
     time.sleep(button_delay)
 
   if(buttons & cwiid.BTN_RIGHT):
-    if (stopTime > STOP_LOWER_LIMIT + 20):
-      bus.write_word_data(addr, 0x40, stopTime-20)
-      bus.write_word_data(addr, 0x44, stopTime-20)
-    check = 1		
-    while check == 1:
-      buttons = wii.state['buttons']
-      time.sleep(button_delay)
-      check = (buttons & cwiid.BTN_RIGHT)
-    bus.write_word_data(addr, 0x40, stopTime)
-    bus.write_word_data(addr, 0x44, stopTime)	
+    if (leftStopTime > STOP_LOWER_LIMIT + 10):
+      bus.write_word_data(addr, 0x38, leftStopTime+10)
+      bus.write_word_data(addr, 0x3C, leftStopTime+10)
+    if (rightStopTime > STOP_LOWER_LIMIT + 10):
+      bus.write_word_data(addr, 0x40, rightStopTime-10)
+      bus.write_word_data(addr, 0x44, rightStopTime-10)	
     time.sleep(button_delay)
 
-
   if (buttons & cwiid.BTN_UP):
-    if (stopTime < STOP_UPPER_LIMIT - 10):
-      stopTime = stopTime + 10
-    bus.write_word_data(addr, 0x38, stopTime)
-    bus.write_word_data(addr, 0x3C, stopTime)
-    bus.write_word_data(addr, 0x40, stopTime)
-    bus.write_word_data(addr, 0x44, stopTime)
+    if (leftStopTime < STOP_UPPER_LIMIT - 10 & rightStopTime < STOP_UPPER_LIMIT - 10):
+      leftStopTime = leftStopTime + 10
+      rightStopTime = rightStopTime + 10
+    bus.write_word_data(addr, 0x38, leftStopTime)
+    bus.write_word_data(addr, 0x3C, leftStopTime)
+    bus.write_word_data(addr, 0x40, rightStopTime)
+    bus.write_word_data(addr, 0x44, rightStopTime)
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_DOWN):
-    if (stopTime > STOP_LOWER_LIMIT + 10):
-      stopTime = stopTime - 10
-    bus.write_word_data(addr, 0x38, stopTime)
-    bus.write_word_data(addr, 0x3C, stopTime)
-    bus.write_word_data(addr, 0x40, stopTime)
-    bus.write_word_data(addr, 0x44, stopTime)
+    if (leftStopTime > STOP_LOWER_LIMIT + 10 & rightStopTime > STOP_LOWER_LIMIT + 10):
+      leftStopTime = leftStopTime - 10
+      rightStopTime = rightStopTime - 10
+    bus.write_word_data(addr, 0x38, leftStopTime)
+    bus.write_word_data(addr, 0x3C, leftStopTime)
+    bus.write_word_data(addr, 0x40, rightStopTime)
+    bus.write_word_data(addr, 0x44, rightStopTime)
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_A):
-    print 'Button A pressed'
     wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
-    check = 1
-    while check == 1:
-      accel = wii.state['acc']
-      print(accel)
-      if accel[1] < 125:
-        print 'Increase Duty Cycle'
-      elif accel[1] > 135:
-	print 'Decrease Duty Cycle'
-      if accel[0] < 125:
-        print 'Decrease Left Motors Duty Cycle'
-      elif accel[0] > 135:
-	print 'Decrease Right Motors Duty Cycle'
-      time.sleep(button_delay)
-      buttons = wii.state['buttons']
-      time.sleep(button_delay)
-      check = (buttons & cwiid.BTN_A)
+    accel = wii.state['acc']
+    print(accel)
+    if accel[1] < 125:
+      print 'Increase Duty Cycle'
+    elif accel[1] > 135:
+      print 'Decrease Duty Cycle'
+    if accel[0] < 125:
+      print 'Decrease Left Motors Duty Cycle'
+    elif accel[0] > 135:
+      print 'Decrease Right Motors Duty Cycle'
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):

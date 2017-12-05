@@ -8,7 +8,6 @@ STOP_UPPER_LIMIT = 1638
 rightStopTime = STOP_LOWER_LIMIT
 leftStopTime = STOP_LOWER_LIMIT
 button_delay = 0.2
-check = 0
 # I2C & Servo Hat set up 
 bus = smbus.SMBus(1)
 addr = 0x40 # sudo i2cdetect -y 1

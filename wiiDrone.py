@@ -4,21 +4,25 @@ import cwiid, time, smbus
 START_TIME = 0
 STOP_LOWER_LIMIT = 819
 STOP_UPPER_LIMIT = 1638
-
+# Variables
+stopTime = STOP_LOWER_LIMIT
+button_delay = 0.1
+check = 0
 # I2C & Servo Hat set up 
 bus = smbus.SMBus(1)
 addr = 0x40 # sudo i2cdetect -y 1
 bus.write_byte_data(addr, 0, 0x20)
 bus.write_byte_data(addr, 0xfe, 0x1e)
-# PWM start times
+# PWM start & stop time setup
 bus.write_word_data(addr, 0x36, START_TIME) # Ch12
 bus.write_word_data(addr, 0x3A, START_TIME) # Ch13
 bus.write_word_data(addr, 0x3E, START_TIME) # Ch14
 bus.write_word_data(addr, 0x42, START_TIME) # Ch15
+bus.write_word_data(addr, 0x38, stopTime)
+bus.write_word_data(addr, 0x3C, stopTime)
+bus.write_word_data(addr, 0x40, stopTime)
+bus.write_word_data(addr, 0x44, stopTime)
 # WiiMote set up
-stopTime = STOP_LOWER_LIMIT
-button_delay = 0.1
-check = 0
 
 print 'Please press buttons 1 + 2 on your Wiimote now ...'
 time.sleep(1)

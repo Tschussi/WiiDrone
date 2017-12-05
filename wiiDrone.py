@@ -60,7 +60,7 @@ while True:
 
   # The following code controls the signals of pwms for flying a drone based on wiimote inputs
   if (buttons & cwiid.BTN_LEFT):
-    if (stopTime > STOP_LOWER_LIMIT + 20)
+    if (stopTime > STOP_LOWER_LIMIT + 20):
       bus.write_word_data(addr, 0x38, stopTime-20)
       bus.write_word_data(addr, 0x3C, stopTime-20)
     check = 0		
@@ -72,7 +72,7 @@ while True:
     time.sleep(button_delay)
 
   if(buttons & cwiid.BTN_RIGHT):
-    if (stopTime > STOP_LOWER_LIMIT + 20)
+    if (stopTime > STOP_LOWER_LIMIT + 20):
       bus.write_word_data(addr, 0x40, stopTime-20)
       bus.write_word_data(addr, 0x44, stopTime-20)
     check = 0		
@@ -85,7 +85,7 @@ while True:
 
 
   if (buttons & cwiid.BTN_UP):
-    if (stopTime < STOP_UPPER_LIMIT - 10)
+    if (stopTime < STOP_UPPER_LIMIT - 10):
       stopTime = stopTime + 10
     bus.write_word_data(addr, 0x38, stopTime)
     bus.write_word_data(addr, 0x3C, stopTime)
@@ -94,7 +94,7 @@ while True:
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_DOWN):
-    if (stopTime > STOP_LOWER_LIMIT + 10)
+    if (stopTime > STOP_LOWER_LIMIT + 10):
       stopTime = stopTime - 10
     bus.write_word_data(addr, 0x38, stopTime)
     bus.write_word_data(addr, 0x3C, stopTime)

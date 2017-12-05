@@ -65,6 +65,7 @@ while True:
       bus.write_word_data(addr, 0x3C, stopTime-20)
     check = 1		
     while check == 1:
+      buttons = wii.state['buttons']
       time.sleep(button_delay)
       check = (buttons & cwiid.BTN_LEFT)
     bus.write_word_data(addr, 0x38, stopTime)
@@ -77,6 +78,7 @@ while True:
       bus.write_word_data(addr, 0x44, stopTime-20)
     check = 1		
     while check == 1:
+      buttons = wii.state['buttons']
       time.sleep(button_delay)
       check = (buttons & cwiid.BTN_RIGHT)
     bus.write_word_data(addr, 0x40, stopTime)
@@ -105,8 +107,8 @@ while True:
   if (buttons & cwiid.BTN_A):
     print 'Button A pressed'
     wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
-    check = 0
-    while check == 0:
+    check = 1
+    while check == 1:
       accel = wii.state['acc']
       print(accel)
       if accel[1] < 125:
@@ -117,8 +119,9 @@ while True:
         print 'Decrease Left Motors Duty Cycle'
       elif accel[0] > 135:
 	print 'Decrease Right Motors Duty Cycle'
+      buttons = wii.state['buttons']
       time.sleep(button_delay)
-      check = (buttons - cwiid.BTN_A)
+      check = (buttons & cwiid.BTN_A)
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):

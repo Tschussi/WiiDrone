@@ -1,5 +1,16 @@
-import cwiid, time
+import cwiid, time, smbus
 
+# I2C & Servo Hat set up 
+bus = smbus.SMBus(1)
+addr = 0x40
+bus.write_byte_data(addr, 0, 0x20)
+bus.write_byte_data(addr, 0xfe, 0x1e)
+# PWM start times
+#bus.write_word_data(addr, 0x36, 819) # Ch12
+#bus.write_word_data(addr, 0x3A, 819) # Ch13
+#bus.write_word_data(addr, 0x3E, 819) # Ch14
+#bus.write_word_data(addr, 0x42, 819) # Ch15
+# WiiMote set up
 button_delay = 0.1
 
 print 'Please press buttons 1 + 2 on your Wiimote now ...'

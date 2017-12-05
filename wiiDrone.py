@@ -64,7 +64,7 @@ while True:
       bus.write_word_data(addr, 0x38, stopTime-20)
       bus.write_word_data(addr, 0x3C, stopTime-20)
     check = 0		
-    while check = 0
+    while check = 0:
       time.sleep(button_delay)
       check = (buttons & cwiid.BTN_LEFT)
     bus.write_word_data(addr, 0x38, stopTime)
@@ -76,7 +76,7 @@ while True:
       bus.write_word_data(addr, 0x40, stopTime-20)
       bus.write_word_data(addr, 0x44, stopTime-20)
     check = 0		
-    while check = 0
+    while check = 0:
       time.sleep(button_delay)
       check = (buttons & cwiid.BTN_LEFT)
     bus.write_word_data(addr, 0x40, stopTime)

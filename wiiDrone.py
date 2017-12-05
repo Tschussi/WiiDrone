@@ -78,7 +78,7 @@ while True:
     check = 0		
     while check == 0:
       time.sleep(button_delay)
-      check = (buttons & cwiid.BTN_LEFT)
+      check = (buttons & cwiid.BTN_RIGHT)
     bus.write_word_data(addr, 0x40, stopTime)
     bus.write_word_data(addr, 0x44, stopTime)	
     time.sleep(button_delay)

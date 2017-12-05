@@ -124,6 +124,7 @@ while True:
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_HOME):
+    print 'Home button pressed'
     wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
     check = 0
     while check == 0:

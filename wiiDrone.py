@@ -6,7 +6,7 @@ STOP_LOWER_LIMIT = 819
 STOP_UPPER_LIMIT = 1638
 # Variables
 stopTime = STOP_LOWER_LIMIT
-button_delay = 0.5
+button_delay = 0.1
 check = 0
 # I2C & Servo Hat set up 
 bus = smbus.SMBus(1)
@@ -107,8 +107,8 @@ while True:
   if (buttons & cwiid.BTN_A):
     print 'Button A pressed'
     wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
-    check = 0
-    while check == 0:
+    check = 1
+    while check == 1:
       accel = wii.state['acc']
       print(accel)
       if accel[1] < 125:
@@ -119,6 +119,7 @@ while True:
         print 'Decrease Left Motors Duty Cycle'
       elif accel[0] > 135:
 	print 'Decrease Right Motors Duty Cycle'
+      time.sleep(button_delay)
       buttons = wii.state['buttons']
       time.sleep(button_delay)
       check = (buttons & cwiid.BTN_A)

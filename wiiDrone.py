@@ -6,7 +6,7 @@ STOP_LOWER_LIMIT = 819
 STOP_UPPER_LIMIT = 1638
 # Variables
 stopTime = STOP_LOWER_LIMIT
-button_delay = 0.1
+button_delay = 0.5
 check = 0
 # I2C & Servo Hat set up 
 bus = smbus.SMBus(1)

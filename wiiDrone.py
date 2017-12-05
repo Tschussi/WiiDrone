@@ -19,10 +19,10 @@ bus.write_word_data(addr, 0x36, START_TIME) # Ch12
 bus.write_word_data(addr, 0x3A, START_TIME) # Ch13
 bus.write_word_data(addr, 0x3E, START_TIME) # Ch14
 bus.write_word_data(addr, 0x42, START_TIME) # Ch15
-bus.write_word_data(addr, 0x38, stopTime)
-bus.write_word_data(addr, 0x3C, stopTime)
-bus.write_word_data(addr, 0x40, stopTime)
-bus.write_word_data(addr, 0x44, stopTime)
+bus.write_word_data(addr, 0x38, STOP_LOWER_LIMIT)
+bus.write_word_data(addr, 0x3C, STOP_LOWER_LIMIT)
+bus.write_word_data(addr, 0x40, STOP_LOWER_LIMIT)
+bus.write_word_data(addr, 0x44, STOP_LOWER_LIMIT)
 # WiiMote set up
 
 print 'Please press buttons 1 + 2 on your Wiimote now ...'
@@ -112,10 +112,9 @@ while True:
       print 'Decrease Right Motors Duty Cycle'
     time.sleep(button_delay)
 
-  if (buttons & cwiid.BTN_B):
-    stopTime = 819		
-    bus.write_word_data(addr, 0x38, stopTime)
-    bus.write_word_data(addr, 0x3C, stopTime)
-    bus.write_word_data(addr, 0x40, stopTime)
-    bus.write_word_data(addr, 0x44, stopTime)
+  if (buttons & cwiid.BTN_B):	
+    bus.write_word_data(addr, 0x38, STOP_LOWER_LIMIT)
+    bus.write_word_data(addr, 0x3C, STOP_LOWER_LIMIT)
+    bus.write_word_data(addr, 0x40, STOP_LOWER_LIMIT)
+    bus.write_word_data(addr, 0x44, STOP_LOWER_LIMIT)
     time.sleep(button_delay)

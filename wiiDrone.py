@@ -78,7 +78,7 @@ while True:
     check = 0		
     while check == 0:
       time.sleep(button_delay)
-      check = (buttons & !cwiid.BTN_RIGHT)
+      check = (buttons & cwiid.BTN_RIGHT)
     bus.write_word_data(addr, 0x40, stopTime)
     bus.write_word_data(addr, 0x44, stopTime)	
     time.sleep(button_delay)
@@ -103,6 +103,7 @@ while True:
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_A):
+    print 'Button A pressed'
     wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
     check = 0
     while check == 0:

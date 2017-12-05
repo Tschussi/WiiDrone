@@ -105,8 +105,8 @@ while True:
   if (buttons & cwiid.BTN_A):
     print 'Button A pressed'
     wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
-    check = 1
-    while check == 1:
+    check = 0
+    while check == 0:
       accel = wii.state['acc']
       print(accel)
       if accel[1] < 125:
@@ -118,7 +118,7 @@ while True:
       elif accel[0] > 135:
 	print 'Decrease Right Motors Duty Cycle'
       time.sleep(button_delay)
-      check = (buttons & cwiid.BTN_A)
+      check = (buttons - cwiid.BTN_A)
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):

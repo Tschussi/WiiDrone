@@ -116,7 +116,7 @@ while True:
     
     if accel[1] > 135: # Vertical movement 3 speeds for both up and down
       if accel[1] > 142:
-        if accel[1] > 149
+        if accel[1] > 149:
           print 'Down Level 3'
           rightStopTime = HOVER - 3 * INCREMENT
           leftStopTime = HOVER - 3 * INCREMENT

@@ -4,24 +4,29 @@ import cwiid, time, smbus
 START_TIME = 0
 STOP_LOWER_LIMIT = 819
 STOP_UPPER_LIMIT = 1638
+MTR1 = 0x38 # Ch12 end address 
+MTR2 = 0x3C # Ch13 ..
+MTR3 = 0x40 # Ch14 ..
+MTR4 = 0x44 # Ch15 ..
+INCREMENT = 10
+BUTTON_DELAY = 0.2
+ADDR = 0x40 # I2C address: sudo i2cdetect -y 1
 # Variables
 rightStopTime = STOP_LOWER_LIMIT
 leftStopTime = STOP_LOWER_LIMIT
-button_delay = 0.2
 # I2C & Servo Hat set up 
 bus = smbus.SMBus(1)
-addr = 0x40 # sudo i2cdetect -y 1
-bus.write_byte_data(addr, 0, 0x20)
-bus.write_byte_data(addr, 0xfe, 0x1e)
+bus.write_byte_data(ADDR, 0, 0x20)
+bus.write_byte_data(ADDR, 0xfe, 0x1e)
 # PWM start & stop time setup
-bus.write_word_data(addr, 0x36, START_TIME) # Ch12
-bus.write_word_data(addr, 0x3A, START_TIME) # Ch13
-bus.write_word_data(addr, 0x3E, START_TIME) # Ch14
-bus.write_word_data(addr, 0x42, START_TIME) # Ch15
-bus.write_word_data(addr, 0x38, STOP_LOWER_LIMIT)
-bus.write_word_data(addr, 0x3C, STOP_LOWER_LIMIT)
-bus.write_word_data(addr, 0x40, STOP_LOWER_LIMIT)
-bus.write_word_data(addr, 0x44, STOP_LOWER_LIMIT)
+bus.write_word_data(ADDR, 0x36, START_TIME) # Ch12 Start 
+bus.write_word_data(ADDR, 0x3A, START_TIME) # Ch13 ..
+bus.write_word_data(ADDR, 0x3E, START_TIME) # Ch14 ..
+bus.write_word_data(ADDR, 0x42, START_TIME) # Ch15 ..
+bus.write_word_data(ADDR, MTR1, STOP_LOWER_LIMIT)
+bus.write_word_data(ADDR, MTR2, STOP_LOWER_LIMIT)
+bus.write_word_data(ADDR, MTR3, STOP_LOWER_LIMIT)
+bus.write_word_data(ADDR, MTR4, STOP_LOWER_LIMIT)
 # WiiMote set up
 
 print 'Please press buttons 1 + 2 on your Wiimote now ...'
@@ -38,6 +43,7 @@ print 'Wiimote connection established!\n'
 print '********Controls*********'
 print 'D-Pad Controls Movement'
 print 'Hold A to control movement with motion'
+print 'Press B to kill motors
 print 'Press PLUS and MINUS together to disconnect and quit.'
 print '*************************'
 
@@ -60,46 +66,46 @@ while True:
 
   # The following code controls the signals of pwms for flying a drone based on wiimote inputs
   if (buttons & cwiid.BTN_LEFT):
-    if (leftStopTime > STOP_LOWER_LIMIT + 10):
-      leftStopTime = leftStopTime - 10
-      bus.write_word_data(addr, 0x38, leftStopTime)
-      bus.write_word_data(addr, 0x3C, leftStopTime)
-    if (rightStopTime < STOP_UPPER_LIMIT - 10):
-      rightStopTime = rightStopTime + 10
-      bus.write_word_data(addr, 0x40, rightStopTime)
-      bus.write_word_data(addr, 0x44, rightStopTime)
-    time.sleep(button_delay)
+    if (leftStopTime > STOP_LOWER_LIMIT + INCREMENT):
+      leftStopTime = leftStopTime - INCREMENT
+      bus.write_word_data(ADDR, MTR1, leftStopTime)
+      bus.write_word_data(ADDR, MTR2, leftStopTime)
+    if (rightStopTime < STOP_UPPER_LIMIT - INCREMENT):
+      rightStopTime = rightStopTime + INCREMENT
+      bus.write_word_data(ADDR, MTR3, rightStopTime)
+      bus.write_word_data(ADDR, MTR4, rightStopTime)
+    time.sleep(BUTTON_DELAY)
 
   if(buttons & cwiid.BTN_RIGHT):
-    if (leftStopTime < STOP_UPPER_LIMIT - 10):
-      leftStopTime = leftStopTime + 10
-      bus.write_word_data(addr, 0x38, leftStopTime)
-      bus.write_word_data(addr, 0x3C, leftStopTime)
-    if (rightStopTime > STOP_LOWER_LIMIT + 10):
-      rightStopTime = rightStopTime - 10
-      bus.write_word_data(addr, 0x40, rightStopTime)
-      bus.write_word_data(addr, 0x44, rightStopTime)	
-    time.sleep(button_delay)
+    if (leftStopTime < STOP_UPPER_LIMIT - INCREMENT):
+      leftStopTime = leftStopTime + INCREMENT
+      bus.write_word_data(ADDR, MTR1, leftStopTime)
+      bus.write_word_data(ADDR, MTR2, leftStopTime)
+    if (rightStopTime > STOP_LOWER_LIMIT + INCREMENT):
+      rightStopTime = rightStopTime - INCREMENT
+      bus.write_word_data(ADDR, MTR3, rightStopTime)
+      bus.write_word_data(ADDR, MTR4, rightStopTime)	
+    time.sleep(BUTTON_DELAY)
 
   if (buttons & cwiid.BTN_UP):
-    if (leftStopTime < STOP_UPPER_LIMIT - 10 and rightStopTime < STOP_UPPER_LIMIT - 10):
-      leftStopTime = leftStopTime + 10
-      rightStopTime = rightStopTime + 10
-    bus.write_word_data(addr, 0x38, leftStopTime)
-    bus.write_word_data(addr, 0x3C, leftStopTime)
-    bus.write_word_data(addr, 0x40, rightStopTime)
-    bus.write_word_data(addr, 0x44, rightStopTime)
-    time.sleep(button_delay)
+    if (leftStopTime < STOP_UPPER_LIMIT - INCREMENT and rightStopTime < STOP_UPPER_LIMIT - INCREMENT):
+      leftStopTime = leftStopTime + INCREMENT
+      rightStopTime = rightStopTime + INCREMENT
+    bus.write_word_data(ADDR, MTR1, leftStopTime)
+    bus.write_word_data(ADDR, MTR2, leftStopTime)
+    bus.write_word_data(ADDR, MTR3, rightStopTime)
+    bus.write_word_data(ADDR, MTR4, rightStopTime)
+    time.sleep(BUTTON_DELAY)
 
   if (buttons & cwiid.BTN_DOWN):
-    if (leftStopTime > STOP_LOWER_LIMIT + 10 and rightStopTime > STOP_LOWER_LIMIT + 10):
-      leftStopTime = leftStopTime - 10
-      rightStopTime = rightStopTime - 10
-    bus.write_word_data(addr, 0x38, leftStopTime)
-    bus.write_word_data(addr, 0x3C, leftStopTime)
-    bus.write_word_data(addr, 0x40, rightStopTime)
-    bus.write_word_data(addr, 0x44, rightStopTime)
-    time.sleep(button_delay)
+    if (leftStopTime > STOP_LOWER_LIMIT + INCREMENT and rightStopTime > STOP_LOWER_LIMIT + INCREMENT):
+      leftStopTime = leftStopTime - INCREMENT
+      rightStopTime = rightStopTime - INCREMENT
+    bus.write_word_data(ADDR, MTR1, leftStopTime)
+    bus.write_word_data(ADDR, MTR2, leftStopTime)
+    bus.write_word_data(ADDR, MTR3, rightStopTime)
+    bus.write_word_data(ADDR, MTR4, rightStopTime)
+    time.sleep(BUTTON_DELAY)
 
   if (buttons & cwiid.BTN_A):
     wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
@@ -113,11 +119,11 @@ while True:
       print 'Decrease Left Motors Duty Cycle'
     elif accel[0] > 135:
       print 'Decrease Right Motors Duty Cycle'
-    time.sleep(button_delay)
+    time.sleep(BUTTON_DELAY)
 
   if (buttons & cwiid.BTN_B):	
-    bus.write_word_data(addr, 0x38, STOP_LOWER_LIMIT)
-    bus.write_word_data(addr, 0x3C, STOP_LOWER_LIMIT)
-    bus.write_word_data(addr, 0x40, STOP_LOWER_LIMIT)
-    bus.write_word_data(addr, 0x44, STOP_LOWER_LIMIT)
-    time.sleep(button_delay)
+    bus.write_word_data(ADDR, MTR1, STOP_LOWER_LIMIT)
+    bus.write_word_data(ADDR, MTR2, STOP_LOWER_LIMIT)
+    bus.write_word_data(ADDR, MTR3, STOP_LOWER_LIMIT)
+    bus.write_word_data(ADDR, MTR4, STOP_LOWER_LIMIT)
+    time.sleep(BUTTON_DELAY)

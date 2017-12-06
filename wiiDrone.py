@@ -4,10 +4,10 @@ import cwiid, time, smbus
 START_TIME = 0
 STOP_LOWER_LIMIT = 819
 STOP_UPPER_LIMIT = 1638
-MTR1 = 0x38 # Ch12 end address 
-MTR2 = 0x3C # Ch13 ..
-MTR3 = 0x40 # Ch14 ..
-MTR4 = 0x44 # Ch15 ..
+MTR1 = 0x44 # Ch15 end address 
+MTR2 = 0x34 # Ch11 ..
+MTR3 = 0x14 # Ch3 ..
+MTR4 = 0x24 # Ch7 ..
 INCREMENT = 10
 BUTTON_DELAY = 0.2
 ADDR = 0x40 # I2C address: sudo i2cdetect -y 1
@@ -19,10 +19,10 @@ bus = smbus.SMBus(1)
 bus.write_byte_data(ADDR, 0, 0x20)
 bus.write_byte_data(ADDR, 0xfe, 0x1e)
 # PWM start & stop time setup
-bus.write_word_data(ADDR, 0x36, START_TIME) # Ch12 Start 
-bus.write_word_data(ADDR, 0x3A, START_TIME) # Ch13 ..
-bus.write_word_data(ADDR, 0x3E, START_TIME) # Ch14 ..
-bus.write_word_data(ADDR, 0x42, START_TIME) # Ch15 ..
+bus.write_word_data(ADDR, 0x42, START_TIME) # Ch15 Start 
+bus.write_word_data(ADDR, 0x32, START_TIME) # Ch11 ..
+bus.write_word_data(ADDR, 0x12, START_TIME) # Ch3 ..
+bus.write_word_data(ADDR, 0x22, START_TIME) # Ch7 ..
 bus.write_word_data(ADDR, MTR1, STOP_LOWER_LIMIT)
 bus.write_word_data(ADDR, MTR2, STOP_LOWER_LIMIT)
 bus.write_word_data(ADDR, MTR3, STOP_LOWER_LIMIT)

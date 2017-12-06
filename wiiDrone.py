@@ -45,6 +45,7 @@ print '********Controls*********'
 print 'D-Pad Controls Movement'
 print 'Hold A to control movement with motion'
 print 'Press B to kill motors'
+print 'Press 1 to set motors to max power' 
 print 'Press PLUS and MINUS together to disconnect and quit.'
 print '*************************'
 
@@ -66,7 +67,7 @@ while True:
     exit(wii)  
 
   # The following code controls the signals of pwms for flying a drone based on wiimote inputs
-  if (buttons & cwiid.BTN_LEFT):
+  if (buttons & cwiid.BTN_LEFT): # Tilt Left
     if (leftStopTime > STOP_LOWER_LIMIT + INCREMENT):
       leftStopTime = leftStopTime - INCREMENT
       bus.write_word_data(ADDR, MTR1, leftStopTime)
@@ -77,7 +78,7 @@ while True:
       bus.write_word_data(ADDR, MTR4, rightStopTime)
     time.sleep(BUTTON_DELAY)
 
-  if(buttons & cwiid.BTN_RIGHT):
+  if(buttons & cwiid.BTN_RIGHT): # Tilt Right
     if (leftStopTime < STOP_UPPER_LIMIT - INCREMENT):
       leftStopTime = leftStopTime + INCREMENT
       bus.write_word_data(ADDR, MTR1, leftStopTime)
@@ -88,7 +89,7 @@ while True:
       bus.write_word_data(ADDR, MTR4, rightStopTime)	
     time.sleep(BUTTON_DELAY)
 
-  if (buttons & cwiid.BTN_UP):
+  if (buttons & cwiid.BTN_UP): # Increase Vertical speed
     if (leftStopTime < STOP_UPPER_LIMIT - INCREMENT and rightStopTime < STOP_UPPER_LIMIT - INCREMENT):
       leftStopTime = leftStopTime + INCREMENT
       rightStopTime = rightStopTime + INCREMENT
@@ -98,7 +99,7 @@ while True:
     bus.write_word_data(ADDR, MTR4, rightStopTime)
     time.sleep(BUTTON_DELAY)
 
-  if (buttons & cwiid.BTN_DOWN):
+  if (buttons & cwiid.BTN_DOWN): # Decrease Vertical speed
     if (leftStopTime > STOP_LOWER_LIMIT + INCREMENT and rightStopTime > STOP_LOWER_LIMIT + INCREMENT):
       leftStopTime = leftStopTime - INCREMENT
       rightStopTime = rightStopTime - INCREMENT
@@ -108,11 +109,12 @@ while True:
     bus.write_word_data(ADDR, MTR4, rightStopTime)
     time.sleep(BUTTON_DELAY)
 
-  if (buttons & cwiid.BTN_A):
+  if (buttons & cwiid.BTN_A): # Drone Movement with accelerometer readings
     wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
     accel = wii.state['acc']
     print(accel)
-    if accel[1] > 135:
+    
+    if accel[1] > 135: # Vertical movement 3 speeds for both up and down
       if accel[1] > 142:
         if accel[1] > 149
           print 'Down Level 3'
@@ -144,7 +146,8 @@ while True:
       print 'Hover'
       rightStopTime = HOVER
       leftStopTime = HOVER
-    if accel[0] < 125:
+    
+    if accel[0] < 125: # Horizontal Movement 3 speeds for both left and right
       if accel[0] < 118:
         if accel[0] < 111:
           print 'Left Level 3'
@@ -172,13 +175,14 @@ while True:
         print 'Right Level 1'
         rightStopTime = rightStopTime - INCREMENT
         leftSTOPTIME = leftStopTime + INCREMENT
+    
     bus.write_word_data(ADDR, MTR1, leftStopTime)
     bus.write_word_data(ADDR, MTR2, leftStopTime)
     bus.write_word_data(ADDR, MTR3, rightStopTime)
     bus.write_word_data(ADDR, MTR4, rightStopTime)    
     time.sleep(BUTTON_DELAY)
 
-  if (buttons & cwiid.BTN_B):
+  if (buttons & cwiid.BTN_B): # Kill Motors
     bus.write_word_data(ADDR, MTR1, STOP_LOWER_LIMIT)
     bus.write_word_data(ADDR, MTR2, STOP_LOWER_LIMIT)
     bus.write_word_data(ADDR, MTR3, STOP_LOWER_LIMIT)
@@ -187,7 +191,7 @@ while True:
     rightStopTime = STOP_LOWER_LIMIT
     time.sleep(BUTTON_DELAY)
    
-  if (buttons & cwiid.BTN_1):
+  if (buttons & cwiid.BTN_1): # Set Motors to max
     bus.write_word_data(ADDR, MTR1, STOP_UPPER_LIMIT - INCREMENT)
     bus.write_word_data(ADDR, MTR2, STOP_UPPER_LIMIT - INCREMENT)
     bus.write_word_data(ADDR, MTR3, STOP_UPPER_LIMIT - INCREMENT)

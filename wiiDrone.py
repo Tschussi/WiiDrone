@@ -170,7 +170,7 @@ while True:
         else:
           print 'Right Level 2'
           rightStopTime = rightStopTime - 2 * INCREMENT
-          leftStopTime = leftStopTime + + * INCREMENT
+          leftStopTime = leftStopTime + 2 * INCREMENT
       else:
         print 'Right Level 1'
         rightStopTime = rightStopTime - INCREMENT

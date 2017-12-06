@@ -121,9 +121,20 @@ while True:
       print 'Decrease Right Motors Duty Cycle'
     time.sleep(BUTTON_DELAY)
 
-  if (buttons & cwiid.BTN_B):	
+  if (buttons & cwiid.BTN_B):
     bus.write_word_data(ADDR, MTR1, STOP_LOWER_LIMIT)
     bus.write_word_data(ADDR, MTR2, STOP_LOWER_LIMIT)
     bus.write_word_data(ADDR, MTR3, STOP_LOWER_LIMIT)
     bus.write_word_data(ADDR, MTR4, STOP_LOWER_LIMIT)
+    leftStopTime = STOP_LOWER_LIMIT
+    rightStopTime = STOP_LOWER_LIMIT
     time.sleep(BUTTON_DELAY)
+   
+  if (buttons & cwiid.BTN_1):
+    bus.write_word_data(ADDR, MTR1, STOP_UPPER_LIMIT - INCREMENT)
+    bus.write_word_data(ADDR, MTR2, STOP_UPPER_LIMIT - INCREMENT)
+    bus.write_word_data(ADDR, MTR3, STOP_UPPER_LIMIT - INCREMENT)
+    bus.write_word_data(ADDR, MTR4, STOP_UPPER_LIMIT - INCREMENT)
+    leftStopTime = STOP_UPPER_LIMIT - INCREMENT
+    rightStopTime = STOP_UPPER_LIMIT - INCREMENT
+    time.sleep(button_delay)

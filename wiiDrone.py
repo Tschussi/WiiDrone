@@ -43,7 +43,7 @@ print 'Wiimote connection established!\n'
 print '********Controls*********'
 print 'D-Pad Controls Movement'
 print 'Hold A to control movement with motion'
-print 'Press B to kill motors
+print 'Press B to kill motors'
 print 'Press PLUS and MINUS together to disconnect and quit.'
 print '*************************'
 

@@ -130,7 +130,7 @@ while True:
         leftStopTime = HOVER - INCREMENT 
     elif accel[1] < 125:
       if accel[1] < 118:
-        if accel[1] < 111
+        if accel[1] < 111:
           print 'Up Level 3'
           rightStopTime = HOVER + 3 * INCREMENT
           leftStopTime = HOVER + 3 * INCREMENT

@@ -162,11 +162,11 @@ while True:
         else:
           print 'Left Level 2'
           rightStopTime = rightStopTime + 2 * INCREMENT
-          leftStopTime = leftStopTime + 2 * INCREMENT
+          leftStopTime = leftStopTime - 2 * INCREMENT
       else:
         print 'Left Level 1'
         rightStopTime = rightStopTime + INCREMENT
-        leftStopTime = leftStopTime + INCREMENT
+        leftStopTime = leftStopTime - INCREMENT
     elif accel[0] > 135:
       if accel[0] > 142:
         if accel[0] > 149:

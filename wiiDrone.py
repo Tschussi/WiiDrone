@@ -202,7 +202,7 @@ while True:
     leftStopTime = leftStopTime + 50
     rightStopTime = rightStopTime + 50
     bus.write_word_data(ADDR, MTR1, leftStopTime+2)
-    bus.write_word_data(ADDR, MTR3, rightStopTime+12)
+    bus.write_word_data(ADDR, MTR3, rightStopTime+14)
     bus.write_word_data(ADDR, MTR2, leftStopTime)
     bus.write_word_data(ADDR, MTR4, rightStopTime+12)
     #bus.write_word_data(ADDR, MTR1, STOP_UPPER_LIMIT - INCREMENT)

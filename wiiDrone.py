@@ -8,7 +8,7 @@ MTR1 = 0x44 # Ch15 end address
 MTR2 = 0x34 # Ch11 ..
 MTR3 = 0x14 # Ch3 ..
 MTR4 = 0x24 # Ch7 ..
-INCREMENT = 1
+INCREMENT = 3
 BUTTON_DELAY = 0.2
 HOVER = 1000
 ADDR = 0x40 # I2C address: sudo i2cdetect -y 1
@@ -96,7 +96,7 @@ while True:
     if (leftStopTime < STOP_UPPER_LIMIT - INCREMENT and rightStopTime < STOP_UPPER_LIMIT - INCREMENT):
       leftStopTime = leftStopTime + INCREMENT
       rightStopTime = rightStopTime + INCREMENT
-    bus.write_word_data(ADDR, MTR3, rightStopTime)
+    bus.write_word_data(ADDR, MTR3, rightStopTime+1)
     bus.write_word_data(ADDR, MTR4, rightStopTime)
     bus.write_word_data(ADDR, MTR2, leftStopTime)
     bus.write_word_data(ADDR, MTR1, leftStopTime)

@@ -8,7 +8,7 @@ MTR1 = 0x44 # Ch15 end address
 MTR2 = 0x34 # Ch11 ..
 MTR3 = 0x14 # Ch3 ..
 MTR4 = 0x24 # Ch7 ..
-INCREMENT = 3
+INCREMENT = 5
 BUTTON_DELAY = 0.2
 HOVER = 1000
 ADDR = 0x40 # I2C address: sudo i2cdetect -y 1
@@ -96,7 +96,7 @@ while True:
     if (leftStopTime < STOP_UPPER_LIMIT - INCREMENT and rightStopTime < STOP_UPPER_LIMIT - INCREMENT):
       leftStopTime = leftStopTime + INCREMENT
       rightStopTime = rightStopTime + INCREMENT
-    bus.write_word_data(ADDR, MTR3, rightStopTime+15)
+    bus.write_word_data(ADDR, MTR3, rightStopTime)
     bus.write_word_data(ADDR, MTR4, rightStopTime)
     bus.write_word_data(ADDR, MTR2, leftStopTime)
     bus.write_word_data(ADDR, MTR1, leftStopTime)
@@ -144,7 +144,7 @@ while True:
           rightStopTime = HOVER + 2 * INCREMENT
           leftStopTime = HOVER + 2 * INCREMENT
       else:
-        print 'Up Level 3'
+        print 'Up Level 1'
         rightStopTime = HOVER + INCREMENT
         leftStopTime = HOVER + INCREMENT 
     else:
@@ -196,7 +196,7 @@ while True:
     rightStopTime = STOP_LOWER_LIMIT
     time.sleep(BUTTON_DELAY)
    
-  if (buttons & cwiid.BTN_1): # Set Motors to max
+  if (buttons & cwiid.BTN_1): # Testing block
     leftStopTime = leftStopTime + 50
     rightStopTime = rightStopTime + 50
     bus.write_word_data(ADDR, MTR1, leftStopTime)

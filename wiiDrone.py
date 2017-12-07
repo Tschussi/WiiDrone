@@ -8,9 +8,9 @@ MTR1 = 0x44 # Ch15 end address
 MTR2 = 0x34 # Ch11 ..
 MTR3 = 0x14 # Ch3 ..
 MTR4 = 0x24 # Ch7 ..
-INCREMENT = 5
+INCREMENT = 10
 BUTTON_DELAY = 0.2
-HOVER = 1000
+HOVER = 880
 ADDR = 0x40 # I2C address: sudo i2cdetect -y 1
 
 # Variables

@@ -96,7 +96,7 @@ while True:
     if (leftStopTime < STOP_UPPER_LIMIT - INCREMENT and rightStopTime < STOP_UPPER_LIMIT - INCREMENT):
       leftStopTime = leftStopTime + INCREMENT
       rightStopTime = rightStopTime + INCREMENT
-    bus.write_word_data(ADDR, MTR3, rightStopTime+1)
+    bus.write_word_data(ADDR, MTR3, rightStopTime+15)
     bus.write_word_data(ADDR, MTR4, rightStopTime)
     bus.write_word_data(ADDR, MTR2, leftStopTime)
     bus.write_word_data(ADDR, MTR1, leftStopTime)

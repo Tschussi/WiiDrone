@@ -209,4 +209,4 @@ while True:
     #bus.write_word_data(ADDR, MTR4, STOP_UPPER_LIMIT - INCREMENT)
     #leftStopTime = STOP_UPPER_LIMIT - INCREMENT
     #rightStopTime = STOP_UPPER_LIMIT - INCREMENT
-    time.sleep(button_delay)
+    time.sleep(BUTTON_DELAY)

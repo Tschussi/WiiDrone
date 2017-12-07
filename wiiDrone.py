@@ -97,8 +97,8 @@ while True:
       leftStopTime = leftStopTime + INCREMENT
       rightStopTime = rightStopTime + INCREMENT
     bus.write_word_data(ADDR, MTR3, rightStopTime)
-    bus.write_word_data(ADDR, MTR2, leftStopTime)
     bus.write_word_data(ADDR, MTR4, rightStopTime)
+    bus.write_word_data(ADDR, MTR2, leftStopTime)
     bus.write_word_data(ADDR, MTR1, leftStopTime)
     print leftStopTime, rightStopTime
     time.sleep(BUTTON_DELAY)

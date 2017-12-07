@@ -202,7 +202,7 @@ while True:
     bus.write_word_data(ADDR, MTR1, leftStopTime)
     bus.write_word_data(ADDR, MTR3, rightStopTime+8)
     bus.write_word_data(ADDR, MTR2, leftStopTime)
-    bus.write_word_data(ADDR, MTR4, rightStopTime+7)
+    bus.write_word_data(ADDR, MTR4, rightStopTime+8)
     #bus.write_word_data(ADDR, MTR1, STOP_UPPER_LIMIT - INCREMENT)
     #bus.write_word_data(ADDR, MTR2, STOP_UPPER_LIMIT - INCREMENT)
     #bus.write_word_data(ADDR, MTR3, STOP_UPPER_LIMIT - INCREMENT)

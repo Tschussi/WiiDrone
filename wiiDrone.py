@@ -166,7 +166,7 @@ while True:
       else:
         print 'Left Level 1'
         rightStopTime = rightStopTime + INCREMENT
-        leftSTOPTIME = leftStopTime + INCREMENT
+        leftStopTime = leftStopTime + INCREMENT
     elif accel[0] > 135:
       if accel[0] > 142:
         if accel[0] > 149:
@@ -180,7 +180,7 @@ while True:
       else:
         print 'Right Level 1'
         rightStopTime = rightStopTime - INCREMENT
-        leftSTOPTIME = leftStopTime + INCREMENT
+        leftStopTime = leftStopTime + INCREMENT
     
     bus.write_word_data(ADDR, MTR1, leftStopTime)
     bus.write_word_data(ADDR, MTR2, leftStopTime)

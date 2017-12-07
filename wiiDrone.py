@@ -12,13 +12,16 @@ INCREMENT = 10
 BUTTON_DELAY = 0.2
 HOVER = 1000
 ADDR = 0x40 # I2C address: sudo i2cdetect -y 1
+
 # Variables
 rightStopTime = STOP_LOWER_LIMIT
 leftStopTime = STOP_LOWER_LIMIT
+
 # I2C & Servo Hat set up 
 bus = smbus.SMBus(1)
 bus.write_byte_data(ADDR, 0, 0x20)
 bus.write_byte_data(ADDR, 0xfe, 0x1e)
+
 # PWM start & stop time setup
 bus.write_word_data(ADDR, 0x42, START_TIME) # Ch15 Start 
 bus.write_word_data(ADDR, 0x32, START_TIME) # Ch11 ..
@@ -28,8 +31,8 @@ bus.write_word_data(ADDR, MTR1, STOP_LOWER_LIMIT)
 bus.write_word_data(ADDR, MTR2, STOP_LOWER_LIMIT)
 bus.write_word_data(ADDR, MTR3, STOP_LOWER_LIMIT)
 bus.write_word_data(ADDR, MTR4, STOP_LOWER_LIMIT)
-# WiiMote set up
 
+# WiiMote set up
 print 'Please press buttons 1 + 2 on your Wiimote now ...'
 time.sleep(1)
 
@@ -97,6 +100,7 @@ while True:
     bus.write_word_data(ADDR, MTR2, leftStopTime)
     bus.write_word_data(ADDR, MTR3, rightStopTime)
     bus.write_word_data(ADDR, MTR4, rightStopTime)
+    print leftStopTime, rightStopTime
     time.sleep(BUTTON_DELAY)
 
   if (buttons & cwiid.BTN_DOWN): # Decrease Vertical speed
@@ -107,6 +111,7 @@ while True:
     bus.write_word_data(ADDR, MTR2, leftStopTime)
     bus.write_word_data(ADDR, MTR3, rightStopTime)
     bus.write_word_data(ADDR, MTR4, rightStopTime)
+    print leftStopTime, rightStopTime
     time.sleep(BUTTON_DELAY)
 
   if (buttons & cwiid.BTN_A): # Drone Movement with accelerometer readings
